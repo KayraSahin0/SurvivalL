@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     }
 
     
+
     void FixedUpdate()
     {
         Movement();
@@ -44,9 +45,9 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W))
             moveDir.z -= 1;
         if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
-            moveDir.z += 1;
+            moveDir.x += 1;
         if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
-            moveDir.z -= 1;
+            moveDir.x -= 1;
 
         if (Input.GetKey(KeyCode.LeftShift))
         {

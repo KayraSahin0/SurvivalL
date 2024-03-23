@@ -40,7 +40,7 @@ public class PlayerStats : MonoBehaviour
     
     void Update()
     {
-        UpdateState();
+        UpdateStats();
         UpdateUI();
     }
 
@@ -56,12 +56,12 @@ public class PlayerStats : MonoBehaviour
         thirstBar.bar.fillAmount = thirst / 100;
     }
 
-    private void UpdateState()
+    private void UpdateStats()
     {
         if (health <= 0)
             health = 0;
-        if (health >= maxHunger)
-            health = maxHunger;
+        if (health >= maxHealth)
+            health = maxHealth;
 
         if (hunger <= 0)
             hunger = 0;
@@ -81,9 +81,9 @@ public class PlayerStats : MonoBehaviour
             thirst -= thirstDepletion * Time.deltaTime;
 
         // DAMAGES
-        if (hunger < 0)
+        if (hunger <= 0)
             health -= hungerDamage * Time.deltaTime;
-        if (thirst < 0)
+        if (thirst <= 0)
             health -= thirstDamage * Time.deltaTime;
     }
 
