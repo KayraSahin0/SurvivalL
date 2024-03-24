@@ -21,8 +21,8 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
 
     private void Start()
     {
-        dragDropHandler = GetComponentInParent<DragDropHandler>();
-        inventory = GetComponentInParent<InventoryManager>();
+        dragDropHandler = GetComponentInParent<Player>().GetComponentInChildren<DragDropHandler>();
+        inventory = GetComponentInParent<Player>().GetComponentInChildren<InventoryManager>();
 
         UpdateSlot();
     }
