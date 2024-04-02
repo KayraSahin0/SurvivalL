@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Stone Hatchet
+  m_Controller: {fileID: 9100000, guid: 44f719566b5a1284fa8bf6a1e323e0fa, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: a51fa1fc53351a446b7960020a351462, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8f6a4ca37fee10840929accd0f782115, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: fc54c00d761a3ae4fbeed0277b7be4ed, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 757048d04c9d1884db8fe39862fb75a1, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: aa9e4444a33be6d409a7cd89a5e3605c, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f6730b07842c09b4fb850e853e894449, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c60ce1c39edfb994d897edabf106f79f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 61c883c7ca42232458f89a9651b06977, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: ca9b0a68155913b4b9bf8ade3c6d1bfc, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: c033e301c53084f44a17c3ccf9b5ae09, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 3cb9ab5ab4c32e24da5a0ca35f172e3a, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d68f33fbef1065848b676bdf21077f2c, type: 2}

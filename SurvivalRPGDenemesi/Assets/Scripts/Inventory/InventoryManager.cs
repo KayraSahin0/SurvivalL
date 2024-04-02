@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
+    public Weapon[] weapons;
+
     public bool opened;
     public KeyCode inventoryKey = KeyCode.Tab;
 
