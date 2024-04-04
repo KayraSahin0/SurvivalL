@@ -97,6 +97,8 @@ public class Weapon : MonoBehaviour
         if (currentFireRare < fireRate || isReloading || !hasTakenOut || player.running || slotEquippedOn.stackSize <= 0 || player.windowHandler.inventory.opened)
             return;
 
+        GetComponentInParent<Animator>().SetTrigger("Shake");
+
         RaycastHit hit;
         Vector3 shootDir = shootPoint.forward;
 
@@ -129,6 +131,8 @@ public class Weapon : MonoBehaviour
     {
         if (currentFireRare < fireRate || isReloading || !hasTakenOut || player.running || slotEquippedOn.stackSize <= 0 || player.windowHandler.inventory.opened)
             return;
+
+        GetComponentInParent<Animator>().SetTrigger("Shake");
 
         for (int i = 0; i < weaponData.pelletPerShot; i++)
         {
@@ -310,9 +314,18 @@ public class Weapon : MonoBehaviour
     {
         RaycastHit hit;
 
+        GetComponentInParent<Animator>().SetTrigger("Shake");
+
         if (Physics.SphereCast(shootPoint.position, 0.2f, shootPoint.forward, out hit, weaponData.range, shootableLabels))
         {
+            GatherableObject gatherObj = hit.transform.GetComponent<GatherableObject>();
+            GatherExtension gatherExten = hit.transform.GetComponent<GatherExtension>();
+
+            if (gatherObj != null)
+                gatherObj.Gather(weaponData, GetComponentInParent<WindowHandler>().inventory);            
             
+            if (gatherExten != null)
+                gatherExten.Gather(weaponData, GetComponentInParent<WindowHandler>().inventory);
         }
     }
 

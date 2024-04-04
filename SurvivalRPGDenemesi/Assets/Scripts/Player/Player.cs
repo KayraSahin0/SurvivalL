@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -21,19 +22,66 @@ public class Player : MonoBehaviour
     private float gravityAcceleration;
     private float yVelocity;
 
+    [HideInInspector] public bool crouching;
+    [HideInInspector] public bool walking;
     [HideInInspector] public bool running;
+
+    [Header("Footsteps")]
+    private AudioSource audioS;
+
+    private float currentCrouchLength;
+    private float currentWalkLength;
+    private float currentRunLength;
+
+    public float crouchStepLength;
+    public float walkStepLength;
+    public float runStepLength;
 
     void Start()
     {
         windowHandler = GetComponent<WindowHandler>();
         cc = GetComponent<CharacterController>();
         cam = GetComponentInChildren<CameraLook>();
+        audioS = GetComponent<AudioSource>();
 
         gravityAcceleration = gravity * gravity;
         gravityAcceleration *= Time.deltaTime; 
     }
 
-    
+    private void Update()
+    {
+        if (crouching)
+        {
+            if (currentCrouchLength < crouchStepLength)
+                currentCrouchLength += Time.deltaTime;
+            else
+            {
+                currentCrouchLength = 0;
+                audioS.PlayOneShot(GetFootStep());
+            }
+        }
+        else if (walking)
+        {
+            if (currentWalkLength < walkStepLength)
+                currentWalkLength += Time.deltaTime;
+            else
+            {
+                currentWalkLength = 0;
+                audioS.PlayOneShot(GetFootStep());
+            }
+        }
+        else if (running)
+        {
+            if (currentRunLength < runStepLength)
+                currentRunLength += Time.deltaTime;
+            else
+            {
+                currentRunLength = 0;
+                audioS.PlayOneShot(GetFootStep());
+            }
+        }
+        
+    }
 
     void FixedUpdate()
     {
@@ -61,6 +109,8 @@ public class Player : MonoBehaviour
             cc.height = Mathf.Lerp(cc.height, 2, crouchTransitionSpeed * Time.deltaTime);
             cc.center = Vector3.Lerp(cc.center, new Vector3(0, 1, 0), crouchTransitionSpeed * Time.deltaTime);
 
+            crouching = false;
+            walking = false;
             running = true;
         }
         else if (Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.LeftShift))
@@ -71,6 +121,8 @@ public class Player : MonoBehaviour
             cc.height = Mathf.Lerp(cc.height, 1.2f, crouchTransitionSpeed * Time.deltaTime);
             cc.center = Vector3.Lerp(cc.center, new Vector3(0, 0.59f, 0), crouchTransitionSpeed * Time.deltaTime);
 
+            crouching = true;
+            walking = false;
             running = false;
         }
 
@@ -82,6 +134,15 @@ public class Player : MonoBehaviour
             cc.height = Mathf.Lerp(cc.height, 2, crouchTransitionSpeed * Time.deltaTime);
             cc.center = Vector3.Lerp(cc.center, new Vector3(0, 1, 0), crouchTransitionSpeed * Time.deltaTime);
 
+            crouching = false;
+            walking = true;
+            running = false;
+        }
+
+        if (moveDir == Vector3.zero)
+        {
+            crouching = false;
+            walking = false;
             running = false;
         }
 
@@ -102,6 +163,28 @@ public class Player : MonoBehaviour
         moveDir *= Time.deltaTime;
 
         cc.Move(moveDir);
+
+    }
+
+    public AudioClip GetFootStep()
+    {
+        RaycastHit hit;
+
+        if (Physics.SphereCast(cc.center, 0.2f, Vector3.down, out hit, cc.bounds.extents.y + 0.3f))
+        {
+            Surface surface = hit.transform.GetComponent<Surface>();
+
+            if (surface != null)
+            {
+                int i = Random.Range(0, surface.surface.footsteps.Length);
+
+                return surface.surface.footsteps[i];
+            }
+            else
+                return null;
+        }
+        else
+            return null;
 
     }
 }
